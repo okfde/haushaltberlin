@@ -6,7 +6,7 @@ $(function(){
     'functions': ['Hauptfunktion', 'Oberfunktion', 'Funktion'],
     'groups': ['Hauptgruppe', 'Obergruppe', 'Gruppe'],
     'plans': ['Einzelplan', 'to'],
-    'areas': ['Typ', 'Bereich']
+    'areas': ['Typ']
   };
 
   var context = {
