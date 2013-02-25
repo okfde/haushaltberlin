@@ -37,9 +37,22 @@ $(function(){
         parts.pop();
       }
       this.state = {};
+      this.state.cuts = {};
+      this.state.cuts["time.year"] = parts[0];
+      this.state.cuts.Titelart = parts[1];
+      this.drillDownType = parts[3];
 
       var typ = parts[2];
-      if (typ === '3') {
+      if (typ === 'all') {
+        if (parts[4] !== undefined) {
+          this.state.cuts["Typ"] = parts[4];
+          this.currentDrillDowns = [];
+          this.updateUI();
+          return this.navigate(this.buildUrl(), {trigger: true});
+        } else {
+          drillDown = ['Typ'];
+        }
+      } else if (typ === '3') {
         // Bezirke
         drillDown = ['Bereich'];
       } else {
@@ -47,12 +60,11 @@ $(function(){
         // Senatsverwaltungen
         drillDown = [];
       }
-      this.drillDownType = parts[3];
 
-      this.state.cuts = {};
-      this.state.cuts.Titelart = parts[1];
-      this.state.cuts["Typ.name"] = typ;
-      this.state.cuts["time.year"] = parts[0];
+      if (typ !== 'all') {
+        this.state.cuts["Typ"] = typ;
+      }
+
 
       this.possibleDrillDowns = drillDown.concat(drillDownTemplate[this.drillDownType]);
 
@@ -96,14 +108,8 @@ $(function(){
     updateUI: function(){
       $('#time').val(this.state.cuts['time.year']);
       $('#titelart').val(this.state.cuts.Titelart);
-      $('#typ').val(this.state.cuts['Typ.name']);
+      $('#typ').val(this.state.cuts['Typ'] || 'all');
       $('#drilldown').val(this.drillDownType);
-      // var breadcrumbs = $('#breadcrumbs').html(null);
-      // for (var i = 0; i < this.currentDrillDowns.length; i += 1) {
-      //   breadcrumbs
-      //     .append($('<dt>').text(this.currentDrillDowns[i]))
-      //     .append($('<dd>').text(this.currentDrillDownLabels[this.currentDrillDowns[i]]));
-      // }
     },
 
     buildUrl: function(start, drilldowns){
