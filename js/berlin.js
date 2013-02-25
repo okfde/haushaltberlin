@@ -5,7 +5,8 @@ $(function(){
   var drillDownTemplate = {
     'functions': ['Hauptfunktion', 'Oberfunktion', 'Funktion'],
     'groups': ['Hauptgruppe', 'Obergruppe', 'Gruppe'],
-    'plans': ['Einzelplan', 'to']
+    'plans': ['Einzelplan', 'to'],
+    'areas': ['Typ']
   };
 
   var context = {
@@ -32,7 +33,7 @@ $(function(){
     },
 
     dispatch: function(args) {
-      var parts = args.split('/'), drillDown;
+      var parts = args.split('/');
       if (parts[parts.length - 1] === '') {
         parts.pop();
       }
@@ -42,23 +43,20 @@ $(function(){
       this.state.cuts.Titelart = parts[1];
       this.drillDownType = parts[3];
 
+      var drillDown = [];
       var typ = parts[2];
       if (typ === 'all') {
-        if (parts[4] !== undefined) {
-          this.state.cuts["Typ"] = parts[4];
-          this.currentDrillDowns = [];
-          this.updateUI();
-          return this.navigate(this.buildUrl(), {trigger: true});
-        } else {
-          drillDown = ['Typ'];
-        }
+        // if (parts[4] !== undefined) {
+        //   this.state.cuts["Typ"] = parts[4];
+        //   this.currentDrillDowns = [];
+        //   this.updateUI();
+        //   return this.navigate(this.buildUrl(), {trigger: true});
+        // } else {
+        //   drillDown = ['Typ'];
+        // }
       } else if (typ === '3') {
         // Bezirke
         drillDown = ['Bereich'];
-      } else {
-        // Verfassungsorgane
-        // Senatsverwaltungen
-        drillDown = [];
       }
 
       if (typ !== 'all') {
@@ -131,10 +129,19 @@ $(function(){
 
   OpenSpending.app = new OpenSpending.BerlinVis(context, {'year': '2012'}, ['group', 'to']);
 
+  $('#refresh').click(function(e){
+    e.preventDefault();
+    OpenSpending.app.start();
+  });
+
   $('#navigation select').change(function(e){
     e.preventDefault();
     OpenSpending.app.start();
   });
+
+  if (document.location.search.indexOf('nonav') !== -1){
+    $('#navigation').hide();
+  }
 
   Backbone.history.start();
 });
