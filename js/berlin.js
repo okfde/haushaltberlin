@@ -131,6 +131,11 @@ $(function(){
 
   OpenSpending.app = new OpenSpending.BerlinVis(context, {'year': '2012'}, ['group', 'to']);
 
+  $('#refresh').click(function(e){
+    e.preventDefault();
+    OpenSpending.app.start();
+  });
+
   $('#navigation select').change(function(e){
     e.preventDefault();
     OpenSpending.app.start();
