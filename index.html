@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <title>Sticky footer &middot; Twitter Bootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="js/openspendingjs/widgets/treemap/css/treemap.css" rel="stylesheet">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+    <style>
+      body, html {
+          padding: 0px;
+          margin: 0px;
+          width: 100%;
+          height: 100%;
+      }
+      #table, #treemap {
+        width: 100%;
+      }
+      #treemap {
+        height: 400px;
+      }
+
+      #table > div > div.row > div.span6 {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+
+
+    <!-- Part 1: Wrap all page content here -->
+    <form id="navigation">
+      <div class="row">
+        <div class="span2">
+          <label for="time">Haushaltsjahr</label>
+          <select class="span2" id="time">
+            <option value="2012">2012</option>
+            <option value="2013" selected="selected">2013</option>
+          </select>
+        </div>
+        <div class="span2">
+          <label for="titelart">Typ</label>
+          <select id="titelart" class="span2">
+            <option value="Einnahmetitel">Einnahmen</option>
+            <option value="Ausgabetitel" selected="selected">Ausgaben</option>
+          </select>
+        </div>
+        <div class="span3">
+          <label for="typ">Bereich</label>
+          <select id="typ">
+            <option value="1">Senatsverwaltungen</option>
+            <option value="3">Bezirke</option>
+            <option value="2">Verfassungsorgane</option>
+          </select>
+        </div>
+        <div class="span2">
+          <label for="drilldown">Anzeige nach</label>
+          <select class="span2" id="drilldown">
+            <option value="plans" selected="selected">Einzelplan</option>
+            <option value="functions">Funktionen</option>
+            <option value="groups">Gruppen</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <dl id="breadcrumbs">
+    </dl>
+    <div id="treemap">
+    </div>
+
+    <div id="table">
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/openspendingjs/prod/boot.js"></script>
+    <script type="text/javascript" src="js/openspendingjs/lib/vendor/backbone-0.9.1.js"></script>
+    <script defer="defer">
+      OpenSpending.scriptRoot = "js/openspendingjs";
+      OpenSpending.localeGroupSeparator = ".";
+      OpenSpending.localeDecimalSeparator = ",";
+    </script>
+    <!-- end script boot section -->
+    <!-- templates/view/_widgets.html widget_js -->
+    <script type="text/javascript" src="js/openspendingjs/lib/widgets.js"></script>
+    <script type="text/javascript" src="js/openspendingjs/widgets/aggregate_table/main.js"></script>
+    <script type="text/javascript" src="js/openspendingjs/widgets/treemap/main.js"></script>
+    <script type="text/javascript" src="js/treetable.js"></script>
+    <script type="text/javascript" src="js/berlin.js"></script>
+  </body>
+</html>
