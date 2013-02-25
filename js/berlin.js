@@ -139,5 +139,9 @@ $(function(){
     OpenSpending.app.start();
   });
 
+  if (document.location.search.indexOf('nonav') !== -1){
+    $('#navigation').hide();
+  }
+
   Backbone.history.start();
 });
