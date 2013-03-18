@@ -45,18 +45,10 @@ $(function(){
 
       var drillDown = [];
       var typ = parts[2];
-      if (typ === 'all') {
-        // if (parts[4] !== undefined) {
-        //   this.state.cuts["Typ"] = parts[4];
-        //   this.currentDrillDowns = [];
-        //   this.updateUI();
-        //   return this.navigate(this.buildUrl(), {trigger: true});
-        // } else {
-        //   drillDown = ['Typ'];
-        // }
-      } else if (typ === '3') {
+
+      if (typ === '3') {
         // Bezirke
-        drillDown = ['Bereich'];
+        // drillDown = ['Typ', 'Bereich'];
       }
 
       if (typ !== 'all') {
