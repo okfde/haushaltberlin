@@ -40,8 +40,11 @@
       #table > div > div.row > div.span6 {
         display: none;
       }
-      #table table tr td:nth-child(2),
-      #table table tr td:nth-child(3) {
+
+      #table table tr td:first-child + td,
+      #table table tr td:first-child + td + td,
+      #table table tr th:first-child + th,
+      #table table tr th:first-child + th + th {
         text-align: right;
       }
     </style>
