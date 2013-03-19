@@ -46,15 +46,13 @@ $(function(){
       var drillDown = [];
       var typ = parts[2];
 
-      if (typ === '3') {
-        // Bezirke
-        // drillDown = ['Typ', 'Bereich'];
-      }
-
       if (typ !== 'all') {
         this.state.cuts["Typ"] = typ;
+        if (this.drillDownType === 'areas') {
+          $('#drilldown').val('plans');
+          return this.navigate(this.buildUrl(), {trigger: true});
+        }
       }
-
 
       this.possibleDrillDowns = drillDown.concat(drillDownTemplate[this.drillDownType]);
 
@@ -99,6 +97,10 @@ $(function(){
       $('#time').val(this.state.cuts['time.year']);
       $('#titelart').val(this.state.cuts.Titelart);
       $('#typ').val(this.state.cuts['Typ'] || 'all');
+      $('#drilldown').find('option[value="areas"]').remove();
+      if($('#typ').val() === 'all') {
+        $('#drilldown').append('<option value="areas">Bereich</option>');
+      }
       $('#drilldown').val(this.drillDownType);
     },
 
