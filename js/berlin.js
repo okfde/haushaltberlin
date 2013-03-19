@@ -71,15 +71,20 @@ $(function(){
       }
     },
 
+    hasNextDrillDown: function(){
+      return this.currentDrillDowns.length < this.possibleDrillDowns.length - 1;
+    },
+
     nextDrillDown: function(value, label) {
       var dd = this.state.drilldowns[0];
-      if (this.currentDrillDowns.length >= this.possibleDrillDowns.length - 1){
-        return;
+      if (!this.hasNextDrillDown()){
+        return false;
       }
       this.currentDrillDownLabels[dd] = label;
       this.currentDrillDowns.push(dd);
       this.state.cuts[dd] = value;
       this.navigate(this.buildUrl(), {trigger: true});
+      return true;
     },
 
     render: function(){
@@ -88,8 +93,10 @@ $(function(){
         treemap: $('#treemap')
       }, context, this.state);
       var self = this;
-      this.treetable.render(this.state, this.moreDrillDowns, function(value, label){
-        self.nextDrillDown(value, label);
+      this.treetable.render(this.state, function(){
+        return self.hasNextDrillDown();
+      }, function(value, label){
+        return self.nextDrillDown(value, label);
       });
     },
 

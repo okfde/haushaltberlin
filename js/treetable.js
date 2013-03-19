@@ -17,13 +17,13 @@ OpenSpending.Treetable = function (elements, context) {
         callback(node.data.name, node.data.title);
       },
       createLabel: function(widget, domElement, node) {
-        if ((node.data.value/treemap.total) > 0.03) {
+        if ((node.data.value / treemap.total) > 0.03) {
           domElement.innerHTML = "<div class='desc'><div class='amount'>" + OpenSpending.Utils.formatAmountWithCommas(node.data.value, 0, treemap.currency) +
           "</div><div class='lbl'>" + truncateName(node.name) + "</div></div>";
         }
       },
       hasClick: function(node) {
-        return moreDrillDowns;
+        return moreDrillDowns();
       },
       tooltipMessage: function(widget, node) {
         var percentualValue = (node.data.value * 100)/widget.total;
@@ -40,6 +40,11 @@ OpenSpending.Treetable = function (elements, context) {
         callback(name, $(e.target).text());
         return false;
       });
+      if (moreDrillDowns()) {
+        widget.$e.removeClass('no-links');
+      } else {
+        widget.$e.addClass('no-links');
+      }
       // Workaround for race condition. Check openspendingjs' issue #12.
       if (widget.dataTable) {
         widget.update(state);
