@@ -11,7 +11,7 @@ $(function(){
 
   var context = {
     dataset: "berlin_de",
-    siteUrl: "http://openspending.org",
+    siteUrl: "https://openspending.org",
     embed: true,
     pagesize: 1000
   };
