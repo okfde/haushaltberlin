@@ -128,7 +128,7 @@ $(function(){
     }
   });
 
-  OpenSpending.app = new OpenSpending.BerlinVis(context, {'year': '2012'}, ['group', 'to']);
+  OpenSpending.app = new OpenSpending.BerlinVis(context, {'year': '2014'}, ['group', 'to']);
 
   $('#refresh').click(function(e){
     e.preventDefault();
