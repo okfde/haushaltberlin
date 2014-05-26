@@ -50,6 +50,9 @@ $(function(){
 
       if (typ !== 'all') {
         this.state.cuts.Typ = typ;
+        if (typ === '3') {
+          drillDown = ['Bereich'];
+        }
         if (this.drillDownType === 'areas') {
           $('#drilldown').val('plans');
           return this.navigate(this.buildUrl(), {trigger: true});
