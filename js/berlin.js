@@ -1,6 +1,8 @@
-OpenSpending = 'OpenSpending' in window ? OpenSpending : {};
+/* globals $, Backbone, OpenSpending */
+window.OpenSpending = 'OpenSpending' in window ? OpenSpending : {};
 
 $(function(){
+  'use strict';
 
   var drillDownTemplate = {
     'functions': ['Hauptfunktion', 'Oberfunktion', 'Funktion'],
@@ -10,8 +12,8 @@ $(function(){
   };
 
   var context = {
-    dataset: "berlin_de",
-    siteUrl: "https://openspending.org",
+    dataset: 'berlin_de',
+    siteUrl: 'https://openspending.org',
     embed: true,
     pagesize: 1000
   };
@@ -39,7 +41,7 @@ $(function(){
       }
       this.state = {};
       this.state.cuts = {};
-      this.state.cuts["time.year"] = parts[0];
+      this.state.cuts['time.year'] = parts[0];
       this.state.cuts.Titelart = parts[1];
       this.drillDownType = parts[3];
 
@@ -47,7 +49,7 @@ $(function(){
       var typ = parts[2];
 
       if (typ !== 'all') {
-        this.state.cuts["Typ"] = typ;
+        this.state.cuts.Typ = typ;
         if (this.drillDownType === 'areas') {
           $('#drilldown').val('plans');
           return this.navigate(this.buildUrl(), {trigger: true});
@@ -103,7 +105,7 @@ $(function(){
     updateUI: function(){
       $('#time').val(this.state.cuts['time.year']);
       $('#titelart').val(this.state.cuts.Titelart);
-      $('#typ').val(this.state.cuts['Typ'] || 'all');
+      $('#typ').val(this.state.cuts.Typ || 'all');
       $('#drilldown').find('option[value="areas"]').remove();
       if($('#typ').val() === 'all') {
         $('#drilldown').append('<option value="areas">Bereich</option>');
