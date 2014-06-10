@@ -52,6 +52,9 @@ $(function(){
         this.state.cuts.Typ = typ;
         if (typ === '3') {
           drillDown = ['Bereich'];
+        } else if (parseInt(typ, 10) > 30) {
+          this.state.cuts.Typ = '3';
+          this.state.cuts.Bereich = typ;
         }
         if (this.drillDownType === 'areas') {
           $('#drilldown').val('plans');
