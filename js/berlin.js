@@ -111,7 +111,11 @@ $(function(){
     updateUI: function(){
       $('#time').val(this.state.cuts['time.year']);
       $('#titelart').val(this.state.cuts.Titelart);
-      $('#typ').val(this.state.cuts.Typ || 'all');
+      if (this.state.cuts.Typ === '3' && this.state.cuts.Bereich) {
+        $('#typ').val(this.state.cuts.Bereich);
+      } else {
+        $('#typ').val(this.state.cuts.Typ || 'all');
+      }
       $('#drilldown').find('option[value="areas"]').remove();
       if($('#typ').val() === 'all') {
         $('#drilldown').append('<option value="areas">Bereich</option>');
