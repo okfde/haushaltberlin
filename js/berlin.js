@@ -33,6 +33,10 @@ $(function(){
     start: function() {
       this.navigate(this.buildUrl(true), {trigger: true});
     },
+    
+    jump: function(drilldowns) {
+      this.navigate(this.buildUrl(false, drilldowns), {trigger: true});
+    },
 
     dispatch: function(args) {
       var parts = args.split('/');
@@ -121,6 +125,60 @@ $(function(){
         $('#drilldown').append('<option value="areas">Bereich</option>');
       }
       $('#drilldown').val(this.drillDownType);
+      //Create the first breadcrumb, as this is the drilldown type it is handled differently
+      var basichtml = "<a id=\"drilldowntypelink\" href>" + $("#drilldown option[value='"+this.drillDownType+"']").text() + "</a>";
+      //Final breadcrumb html
+      var navhtml = "";
+      
+      //Grab data for function
+      var state = this.state;
+      var labels = this.currentDrillDownLabels;
+      
+      //Array for holding the current drilldowns
+      var ddarray = [];
+      //Counter
+      var c = 0;  
+      
+      //Assume we know where we are
+      var simpleNav = false;
+      
+      //Go through each drilldown level possible and if it is in the current state, generate a link
+      _.each(drillDownTemplate[this.drillDownType], function(value) {
+        if (state.cuts[value] != undefined) {
+          //Link
+          navhtml += (" &raquo; <a class=\"drilldownsingle\" dest=\"" + value + "\"href>" + labels[value] + "</a>");
+          //Build up drilldown array for where we want to go
+          ddarray[c] = value;
+          c++;
+        }
+        //Inconsistency caused by reloading/going to a specific URL. No navigation so no breadcrumbs possible (at the moment)
+        if ((state.cuts[value] != undefined) && (labels[value] == undefined)) simpleNav = true;
+      });
+      
+      //Show some kind of explanation
+      if (simpleNav) navhtml = basichtml + " (direkte Anzeige)";
+      //Or the full breadcrumbs
+      else navhtml = basichtml + navhtml;
+      
+      var currentTemplate = drillDownTemplate[this.drillDownType];
+      $('#navigationbreadcrumbs').html(navhtml);
+      $('#drilldowntypelink').click(function(e){
+        e.preventDefault();
+        OpenSpending.app.start();
+      });
+      $('.drilldownsingle').click(function(e){
+        e.preventDefault();
+        //This is the deepest level we want to go
+        var ddlevel = e.currentTarget.attributes.dest.nodeValue;
+        var startUndefining = false;
+        //Once we reach that in the state, remove everything that's left
+        for (var i = 0; i < currentTemplate.length; i += 1){
+          if (startUndefining) delete state.cuts[currentTemplate[i]];
+          if (currentTemplate[i] == ddlevel) startUndefining = true;
+        }
+        //Now go there
+        OpenSpending.app.jump(ddarray);
+      });
     },
 
     buildUrl: function(start, drilldowns){
@@ -141,6 +199,10 @@ $(function(){
   });
 
   OpenSpending.app = new OpenSpending.BerlinVis(context, {'year': '2014'}, ['group', 'to']);
+  
+
+       
+       
 
   $('#refresh').click(function(e){
     e.preventDefault();
