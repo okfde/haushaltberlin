@@ -1,3 +1,4 @@
+var lastelement = "";
 OpenSpending.Treetable = function (elements, context) {
 
   var truncateName = function(name, maxlen, repl){
@@ -35,6 +36,8 @@ OpenSpending.Treetable = function (elements, context) {
     $.when(aggregateTable).then(function(widget) {
       widget.$e.unbind('click', 'td a');
       widget.$e.on('click', 'td a', function(e) {
+        if ($(e.target).html() == lastelement) return false; //workaround double click events
+        lastelement = $(e.target).html(); 
         e.preventDefault();
         var name = $(e.target).attr('data-name') + '';
         callback(name, $(e.target).text());
